@@ -35,6 +35,7 @@ angular.module('proxies.controllers', [])
 
         .then(function(newProxie){
           $scope.proxies.unshift(newProxie);
+          $scope.proxie = {"proxie":"", "description": ""};
         }, function(e){console.log(e);});
     };
   
