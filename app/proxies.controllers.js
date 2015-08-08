@@ -39,8 +39,8 @@ angular.module('proxies.controllers', [])
   
 }])
 
-.controller('ProxieController', ['$scope', '$state', 'Proxie',
- function($scope, $state, Proxie){
+.controller('ProxieController', ['$scope', '$rootScope', '$state', '$timeout', 'Proxie',
+ function($scope, $rootScope, $state, $timeout, Proxie){
 
   var pk = $state.params.pk;
   
@@ -53,11 +53,21 @@ angular.module('proxies.controllers', [])
       }, function(e){console.log(e);})
 
       .then(function(proxie){
-        console.log(proxie);
+        $scope.proxie = proxie;
       }, function(e){console.log(e);});
   }; syncProxie();
 
   $scope.bids = [];
+  $scope.bidsLoaded = false;
+  $scope.bidsmapping = {
+    "00": "FREE",
+    "01": "$0.99",
+    "02": "$4.99",
+    "03": "$9.99",
+    "04": "$49.99",
+    "05": "$99.99"
+  };
+
   var syncBids = function(){
     Proxie.getProxieBids(pk)
       .then(function(s){
@@ -66,7 +76,8 @@ angular.module('proxies.controllers', [])
       }, function(e){console.log(e);})
 
       .then(function(bids){
-        console.log(bids);
+        $scope.bids = bids.results;
+        $timeout(function(){$scope.bidsLoaded=true;}, 1000)
       }, function(e){console.log(e);});  
   }; syncBids();
 
