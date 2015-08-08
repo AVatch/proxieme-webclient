@@ -30,9 +30,15 @@
 
   <section style="margin-left: 10%; margin-right: 10%;">
 
-    <md-subheader class="md-no-sticky">Latest Proxies</md-subheader>    
+    <md-subheader class="md-no-sticky">Latest Proxies</md-subheader>
+
+    <section layout="row" layout-align="center"
+             ng-show="!proxiesLoaded">
+      <md-progress-circular class="md-hue-2" md-mode="indeterminate"></md-progress-circular>      
+    </section>
     
-    <md-list>
+    <md-list ng-show="proxiesLoaded">
+
       <md-list-item ng-repeat="proxieItem in proxies">
       
           <img src="http://placehold.it/350x150" 

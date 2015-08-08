@@ -5,10 +5,11 @@
 */
 angular.module('proxies.controllers', [])
 
-.controller('ProxiesController', ['$scope', '$rootScope', 'Proxie',
-  function($scope, $rootScope, Proxie){
+.controller('ProxiesController', ['$scope', '$rootScope', '$timeout', 'Proxie',
+  function($scope, $rootScope, $timeout, Proxie){
 
     $scope.proxies = [];
+    $scope.proxiesLoaded = false;
     var syncProxies = function(){
       Proxie.getProxies()
         .then(function(s){
@@ -18,6 +19,7 @@ angular.module('proxies.controllers', [])
 
         .then(function(proxies){
           $scope.proxies = proxies.results;
+          $timeout(function(){$scope.proxiesLoaded=true;}, 1000)
         }, function(e){console.log(e);});
     }; syncProxies();
 
