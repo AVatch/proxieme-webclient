@@ -21,7 +21,10 @@
     
     <md-list ng-show="bidsLoaded">
 
-      <md-list-item ng-if="bids.length==0">No Bids :(</md-list-item>
+      <md-list-item ng-if="bids.length==0"
+                    layout="column"
+                    layout-align="center">
+      No Bids :(</md-list-item>
 
       <md-list-item ng-repeat="bidItem in bids">
       
