@@ -62,10 +62,24 @@ angular.module('proxies.services', [])
       return response;
     };
 
+    var postProxieBid = function(bid){
+      var token = Authentication.getToken();
+      var response = $http({
+                        url: DOMAIN + '/api/' + VERSION + '/bids/',
+                        method: 'POST',
+                        headers: { 
+                          'Content-Type': 'application/json',
+                          'Authorization': 'Token ' + token },
+                        data: bid
+                      });
+      return response;
+    };    
+
     return{
       getProxies: getProxies,
       getProxie: getProxie,
       getProxieBids: getProxieBids,
-      postProxie: postProxie
+      postProxie: postProxie,
+      postProxieBid: postProxieBid
     };
 }])

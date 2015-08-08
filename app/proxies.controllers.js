@@ -84,8 +84,27 @@ angular.module('proxies.controllers', [])
       }, function(e){console.log(e);});  
   }; syncBids();
 
-  $scope.createBid = function(bid){
+  $scope.offeredBid = null;
+  $scope.selectBidChoice = function(val){
+    $scope.offeredBid = val;
+  }
+  $scope.createBid = function(){
+    var bid = {
+      "bid": $scope.offeredBid,
+      "bidder": $scope.proxie.account,
+      "proxie": $scope.proxie.id
+    };
+    if($scope.offeredBid!=null){
+      Proxie.postProxieBid(bid)
+        .then(function(s){
+          if(s.status==201){ return s.data; }
+          else{ throw "error making bid"; }
+        }, function(e){console.log(e);})
 
+        .then(function(newBid){
+          $scope.bids.unshift(newBid);          
+        }, function(e){console.log(e);});
+    }
   };
 
 }])
