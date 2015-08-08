@@ -39,7 +39,35 @@ angular.module('proxies.controllers', [])
   
 }])
 
-.controller('ProxieController', ['$scope',
- function($scope){
+.controller('ProxieController', ['$scope', '$state', 'Proxie',
+ function($scope, $state, Proxie){
+
+  var pk = $state.params.pk;
   
+  $scope.proxie = {};
+  var syncProxie = function(){
+    Proxie.getProxie(pk)
+      .then(function(s){
+        if(s.status==200){ return s.data; }
+        else{ throw "error fetching proxy"; }
+      }, function(e){console.log(e);})
+
+      .then(function(proxie){
+        console.log(proxie);
+      }, function(e){console.log(e);});
+  }; syncProxie();
+
+  $scope.bids = [];
+  var syncBids = function(){
+    Proxie.getProxieBids(pk)
+      .then(function(s){
+        if(s.status==200){ return s.data; }
+        else{ throw "error fetching proxy"; }
+      }, function(e){console.log(e);})
+
+      .then(function(bids){
+        console.log(bids);
+      }, function(e){console.log(e);});  
+  }; syncBids();
+
 }])

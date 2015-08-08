@@ -21,6 +21,34 @@ angular.module('proxies.services', [])
       return response;
     };
 
+    var getProxie = function(pk){
+      var token = Authentication.getToken();
+      var response = $http({
+                        url: DOMAIN + '/api/' + VERSION + '/proxies/' + pk + '/',
+                        method: 'GET',
+                        headers: { 
+                          'Content-Type': 'application/json',
+                          'Authorization': 'Token ' + token },
+                        data: ''
+                      });
+      return response;
+    };
+
+
+    var getProxieBids = function(pk){
+      var token = Authentication.getToken();
+      var response = $http({
+                        url: DOMAIN + '/api/' + VERSION + '/proxies/' + pk + '/bids/',
+                        method: 'GET',
+                        headers: { 
+                          'Content-Type': 'application/json',
+                          'Authorization': 'Token ' + token },
+                        data: ''
+                      });
+      return response;
+    };
+
+
     var postProxie = function(proxie){
       var token = Authentication.getToken();
       var response = $http({
@@ -36,6 +64,8 @@ angular.module('proxies.services', [])
 
     return{
       getProxies: getProxies,
+      getProxie: getProxie,
+      getProxieBids: getProxieBids,
       postProxie: postProxie
     };
 }])
