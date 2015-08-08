@@ -29,7 +29,8 @@
                class="md-avatar" />
           <p>{{bidsmapping[bidItem.bid]}}</p>
           
-          <md-button class="md-raised md-primary">Accept: {{bidsmapping[bidItem.bid]}}</md-button>
+          <md-button ng-if="proxie.owner"
+                     class="md-raised md-primary">Accept: {{bidsmapping[bidItem.bid]}}</md-button>
         
       </md-list-item>
 

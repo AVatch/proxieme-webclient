@@ -43,7 +43,7 @@ angular.module('proxies.controllers', [])
  function($scope, $rootScope, $state, $timeout, Proxie){
 
   var pk = $state.params.pk;
-  
+
   $scope.proxie = {};
   var syncProxie = function(){
     Proxie.getProxie(pk)
@@ -54,6 +54,9 @@ angular.module('proxies.controllers', [])
 
       .then(function(proxie){
         $scope.proxie = proxie;
+        if($scope.proxie.account == $rootScope.me.id){
+          $scope.proxie.owner = true;
+        }
       }, function(e){console.log(e);});
   }; syncProxie();
 
