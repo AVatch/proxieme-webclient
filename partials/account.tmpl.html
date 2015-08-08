@@ -9,6 +9,20 @@
   </md-card>
 
   <div layout="row">
+
+    <md-card flex>
+      <md-card-content>
+        <h2>Proxies</h2>
+        <p ng-repeat="proxie in accountProxies">{{proxie}}</p>
+      </md-card-content>
+    </md-card>
+
+    <md-card flex>
+      <md-card-content>
+        <h2>Bids</h2>
+        <p ng-repeat="bid in accountBids">{{bid}}</p>
+      </md-card-content>
+    </md-card>
     
   </div>
 
