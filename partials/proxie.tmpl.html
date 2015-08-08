@@ -40,9 +40,11 @@
 
       <md-list-item ng-repeat="bidItem in bids">
       
-          <img src="http://placehold.it/350x150" 
-               class="md-avatar" />
-          <p>{{bidItem.bidder.username}}</p>
+          <img src="http://placehold.it/350x150"
+               ui-sref="account({ pk: bidItem.bidder.id })"
+               class="md-avatar"
+               style="cursor: pointer;" />
+          <p ui-sref="account({ pk: bidItem.bidder.id })" style="cursor: pointer;">{{bidItem.bidder.username}}</p>
           
           <md-button ng-if="!proxie.owner"
                      class="md-primary">Bid: {{bidsmapping[bidItem.bid]}}</md-button>
