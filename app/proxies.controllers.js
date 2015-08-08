@@ -111,4 +111,31 @@ angular.module('proxies.controllers', [])
     }
   };
 
+  $scope.acceptingBids = true;
+  $scope.acceptBid = function(bidID, proxieID, surrogateID, requesterID){
+    var session =   {
+        "sessionID": "1",
+        "surrogateID": "1",
+        "requesterID": "1",
+        "bid": bidID,
+        "proxie": proxieID,
+        "surrogate": surrogateID,
+        "requester": requesterID
+    }
+
+    Proxie.acceptBid(session)
+      .then(function(s){
+        if(s.status==201){ return s.data; }
+        else{ throw "error accepting bid"; }
+      }, function(e){console.log(e);})
+
+      .then(function(newBid){
+        $scope.acceptingBids = false;
+      }, function(e){console.log(e);});
+  };
+
+
+  
+
+
 }])

@@ -49,7 +49,8 @@
           <md-button ng-if="!proxie.owner"
                      class="md-primary">Bid: {{bidsmapping[bidItem.bid]}}</md-button>
 
-          <md-button ng-if="proxie.owner"
+          <md-button ng-if="proxie.owner && acceptingBids"
+                     ng-click="acceptBid(bidItem.id, proxie.id, bidItem.bidder.id, proxie.account)"
                      class="md-raised md-primary">Accept: {{bidsmapping[bidItem.bid]}}</md-button>
         
       </md-list-item>

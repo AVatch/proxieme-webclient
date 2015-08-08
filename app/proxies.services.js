@@ -73,6 +73,19 @@ angular.module('proxies.services', [])
                         data: bid
                       });
       return response;
+    };
+
+    var acceptBid = function(session){
+      var token = Authentication.getToken();
+      var response = $http({
+                        url: DOMAIN + '/api/' + VERSION + '/proxiessessions/',
+                        method: 'POST',
+                        headers: { 
+                          'Content-Type': 'application/json',
+                          'Authorization': 'Token ' + token },
+                        data: session
+                      });
+      return response;
     };    
 
     return{
@@ -80,6 +93,7 @@ angular.module('proxies.services', [])
       getProxie: getProxie,
       getProxieBids: getProxieBids,
       postProxie: postProxie,
-      postProxieBid: postProxieBid
+      postProxieBid: postProxieBid,
+      acceptBid: acceptBid
     };
 }])
