@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="initial-scale=1" />
+  <title>Proxie.me</title>
+
+  <link rel="stylesheet" href="bower_components/angular-material/angular-material.css">
+  <link rel="stylesheet" href="bower_components/ionicons/css/ionicons.css">
+  <link rel="stylesheet" href="styles/app.css">
+
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-animate/angular-animate.js"></script>
+  <script src="bower_components/angular-aria/angular-aria.js"></script>
+  <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+  <script src="bower_components/angular-material/angular-material.js"></script>
+  <script src="bower_components/ui-router/release/angular-ui-router.js"></script>
+
+  <script src="app/accounts.controllers.js"></script>
+  <script src="app/accounts.services.js"></script>
+  <script src="app/authentication.controllers.js"></script>
+  <script src="app/authentication.services.js"></script>
+  <script src="app/proxies.controllers.js"></script>
+  <script src="app/proxies.services.js"></script>
+  <script src="app/toolbar.controllers.js"></script>
+
+  <script src="app/app.js"></script>
+
+</head>
+
+
+<body ng-app="proxie">
+  <md-toolbar ng-controller="ToolbarController"
+              ng-if="authentication.status">
+    <div class="md-toolbar-tools">
+      <md-button class="md-icon-button" 
+                 aria-label="Proxie.Me" 
+                 ui-sref="proxies">
+        <md-icon md-font-icon="ion-disc"
+                 style="font-size:23px;"></md-icon>
+      </md-button>
+      <h2>
+        <span>Proxie.Me</span>
+      </h2>
+      
+      <span flex></span>
+
+      <md-button aria-label="Login"
+                 ui-sref="account({ pk: account.id })">
+        {{account.username}}
+      </md-button>
+      
+    </div>
+  </md-toolbar>
+  <ui-view></ui-view>
+</body>
+
+</html>
