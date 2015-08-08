@@ -5,8 +5,9 @@
 */
 angular.module('proxies.controllers', [])
 
-.controller('ProxiesController', ['$scope', '$rootScope', '$timeout', 'Proxie',
-  function($scope, $rootScope, $timeout, Proxie){
+.controller('ProxiesController', ['$scope', '$rootScope',
+  '$timeout', 'Account', 'Proxie',
+  function($scope, $rootScope, $timeout, Account, Proxie){
 
     $scope.proxies = [];
     $scope.proxiesLoaded = false;
@@ -39,8 +40,9 @@ angular.module('proxies.controllers', [])
   
 }])
 
-.controller('ProxieController', ['$scope', '$rootScope', '$state', '$timeout', 'Proxie',
- function($scope, $rootScope, $state, $timeout, Proxie){
+.controller('ProxieController', ['$scope', '$rootScope', '$state', 
+ '$timeout', 'Account', 'Proxie',
+ function($scope, $rootScope, $state, $timeout, Account, Proxie){
 
   var pk = $state.params.pk;
 
@@ -91,7 +93,7 @@ angular.module('proxies.controllers', [])
   $scope.createBid = function(){
     var bid = {
       "bid": $scope.offeredBid,
-      "bidder": $scope.proxie.account,
+      "bidder": $scope.me.id,
       "proxie": $scope.proxie.id
     };
     if($scope.offeredBid!=null){
@@ -102,6 +104,7 @@ angular.module('proxies.controllers', [])
         }, function(e){console.log(e);})
 
         .then(function(newBid){
+          newBid.bidder = $rootScope.me;
           $scope.bids.unshift(newBid);          
         }, function(e){console.log(e);});
     }

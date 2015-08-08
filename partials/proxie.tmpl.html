@@ -42,8 +42,11 @@
       
           <img src="http://placehold.it/350x150" 
                class="md-avatar" />
-          <p>{{bidsmapping[bidItem.bid]}}</p>
+          <p>{{bidItem.bidder.username}}</p>
           
+          <md-button ng-if="!proxie.owner"
+                     class="md-primary">Bid: {{bidsmapping[bidItem.bid]}}</md-button>
+
           <md-button ng-if="proxie.owner"
                      class="md-raised md-primary">Accept: {{bidsmapping[bidItem.bid]}}</md-button>
         
