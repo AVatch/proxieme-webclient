@@ -84,4 +84,8 @@ angular.module('proxies.controllers', [])
       }, function(e){console.log(e);});  
   }; syncBids();
 
+  $scope.createBid = function(bid){
+
+  };
+
 }])

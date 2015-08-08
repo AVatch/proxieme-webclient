@@ -9,6 +9,16 @@
     </md-card-content>
   </md-card>
 
+  <section layout="row"
+           layout-align="center center">
+    
+    <md-select placeholder="Bid" ng-model="offeredBid">
+        <md-option ng-repeat="(bidChoiceKey, bidChoiceValue) in bidsmapping" value="{{bidChoiceKey}}">{{bidChoiceValue}}</md-option>
+      </md-select>
+
+    <md-button class="md-raised md-primary">Make a Bid</md-button>
+  </section>
+
 
   <section style="margin-left: 10%; margin-right: 10%;">
 
