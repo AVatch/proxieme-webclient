@@ -5,8 +5,8 @@
 */
 angular.module('toolbar.controllers', [])
 
-.controller('ToolbarController', ['$scope', '$state', 'Account',
-  function($scope, $state, Account){
+.controller('ToolbarController', ['$scope', '$rootScope', '$state', 'Account',
+  function($scope, $rootScope, $state, Account){
    
     $scope.account = {};
     var syncMe = function(){
@@ -16,6 +16,7 @@ angular.module('toolbar.controllers', [])
         }, function(e){console.log(e);})
         .then(function(me){
           $scope.account = me;
+          $rootScope.me = me;
         })
     }; syncMe();
 

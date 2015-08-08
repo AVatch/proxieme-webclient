@@ -17,7 +17,10 @@
         <section ng-show="proxie.proxie" 
                  layout="row" 
                  layout-align="end center">
-          <md-button class="md-raised md-primary">Proxie!</md-button>
+          
+          <md-button ng-click="createProxie(proxie)" 
+                     class="md-raised md-primary">Proxie!</md-button>
+
         </section>
 
     </md-card-content>
@@ -34,7 +37,7 @@
       
           <img src="http://placehold.it/350x150" 
                class="md-avatar" />
-          <p>proxieItem.proxie</p>
+          <p>{{proxieItem.proxie}}</p>
         
       </md-list-item>
 

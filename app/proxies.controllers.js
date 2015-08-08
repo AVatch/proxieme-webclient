@@ -5,10 +5,8 @@
 */
 angular.module('proxies.controllers', [])
 
-.controller('ProxiesController', ['$scope', 'Proxie',
-  function($scope, Proxie){
-
-    $scope.proxie = {"proxie":"", "description": ""};
+.controller('ProxiesController', ['$scope', '$rootScope', 'Proxie',
+  function($scope, $rootScope, Proxie){
 
     $scope.proxies = [];
     var syncProxies = function(){
@@ -19,11 +17,23 @@ angular.module('proxies.controllers', [])
         }, function(e){console.log(e);})
 
         .then(function(proxies){
-          console.log(proxies)
           $scope.proxies = proxies.results;
-
         }, function(e){console.log(e);});
     }; syncProxies();
+
+    $scope.proxie = {"proxie":"", "description": ""};
+    $scope.createProxie = function(proxie){
+      proxie.account = $rootScope.me.id;
+      Proxie.postProxie(proxie)
+        .then(function(s){
+          if(s.status==201){ return s.data; }
+          else{ throw "error creating proxie"; }
+        }, function(e){console.log(e);})
+
+        .then(function(newProxie){
+          $scope.proxies.unshift(newProxie);
+        }, function(e){console.log(e);});
+    };
   
 }])
 
