@@ -49,6 +49,20 @@ angular.module('proxies.services', [])
     };
 
 
+    var getProxieSessions = function(pk){
+      var token = Authentication.getToken();
+      var response = $http({
+                        url: DOMAIN + '/api/' + VERSION + '/proxies/' + pk + '/sessions/',
+                        method: 'GET',
+                        headers: { 
+                          'Content-Type': 'application/json',
+                          'Authorization': 'Token ' + token },
+                        data: ''
+                      });
+      return response;
+    };
+
+
     var postProxie = function(proxie){
       var token = Authentication.getToken();
       var response = $http({
@@ -92,6 +106,7 @@ angular.module('proxies.services', [])
       getProxies: getProxies,
       getProxie: getProxie,
       getProxieBids: getProxieBids,
+      getProxieSessions: getProxieSessions,
       postProxie: postProxie,
       postProxieBid: postProxieBid,
       acceptBid: acceptBid

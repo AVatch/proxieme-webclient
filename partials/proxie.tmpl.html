@@ -9,7 +9,7 @@
     </md-card-content>
   </md-card>
 
-  <section ng-if="!proxie.owner"
+  <section ng-if="!proxie.owner && acceptingBids"
            layout="row"
            layout-align="center center">
     
@@ -46,8 +46,11 @@
                style="cursor: pointer;" />
           <p ui-sref="account({ pk: bidItem.bidder.id })" style="cursor: pointer;">{{bidItem.bidder.username}}</p>
           
-          <md-button ng-if="!proxie.owner"
+          <md-button ng-if="!proxie.owner && acceptingBids"
                      class="md-primary">Bid: {{bidsmapping[bidItem.bid]}}</md-button>
+
+          <md-button ng-if="!acceptingBids && bidItem.id == session.bid.id"
+                     class="md-primary">Accepted: {{bidsmapping[bidItem.bid]}}</md-button>
 
           <md-button ng-if="proxie.owner && acceptingBids"
                      ng-click="acceptBid(bidItem.id, proxie.id, bidItem.bidder.id, proxie.account)"

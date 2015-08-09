@@ -113,29 +113,45 @@ angular.module('proxies.controllers', [])
 
   $scope.acceptingBids = true;
   $scope.acceptBid = function(bidID, proxieID, surrogateID, requesterID){
-    var session =   {
-        "sessionID": "1",
-        "surrogateID": "1",
-        "requesterID": "1",
-        "bid": bidID,
-        "proxie": proxieID,
-        "surrogate": surrogateID,
-        "requester": requesterID
+    if($scope.acceptingBids){
+      var session =   {
+          "sessionID": "1",
+          "surrogateID": "1",
+          "requesterID": "1",
+          "bid": bidID,
+          "proxie": proxieID,
+          "surrogate": surrogateID,
+          "requester": requesterID
+      }
+
+      Proxie.acceptBid(session)
+        .then(function(s){
+          if(s.status==201){ return s.data; }
+          else{ throw "error accepting bid"; }
+        }, function(e){console.log(e);})
+
+        .then(function(newBid){
+          $scope.acceptingBids = false;
+          syncSessions();
+        }, function(e){console.log(e);});
     }
-
-    Proxie.acceptBid(session)
-      .then(function(s){
-        if(s.status==201){ return s.data; }
-        else{ throw "error accepting bid"; }
-      }, function(e){console.log(e);})
-
-      .then(function(newBid){
-        $scope.acceptingBids = false;
-      }, function(e){console.log(e);});
   };
 
 
-  
+  $scope.session = {};
+  var syncSessions = function(){
+    Proxie.getProxieSessions(pk)
+      .then(function(s){
+        if(s.status==200){ return s.data; }
+        else{ throw "error syncing sessions"; }
+      }, function(e){console.log(e);})
+
+      .then(function(sessions){
+        $scope.session = sessions.results[0];
+        console.log($scope.session);
+        if(sessions.count>0){ $scope.acceptingBids = false; }
+      }, function(e){console.log(e);});
+  }; syncSessions();
 
 
 }])
