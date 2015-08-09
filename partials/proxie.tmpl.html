@@ -49,6 +49,23 @@
                class="md-raised md-primary">Make a Bid</md-button>
   </section>
 
+  <section ng-show="payFormVisible"
+           layout="column"
+           layout-align="center center">
+
+    <md-card>
+      
+      <form id="checkout" method="post" action="http://localhost:8000/api/v1/braintree/">
+        <div id="payment-form"></div>
+        <input value="http://16df07c0.ngrok.com/#/proxie/4" name="origin" style="display:none;">
+        <input value="{{acceptedBid}}" name="amount" style="display:none;">
+        <md-button type="submit">Submit</md-button>
+
+      </form>
+
+    </md-card>
+  </section>
+
 
   <section style="margin-left: 10%; margin-right: 10%;">
 
@@ -81,7 +98,7 @@
                      class="md-primary">Accepted: {{bidsmapping[bidItem.bid]}}</md-button>
 
           <md-button ng-if="proxie.owner && acceptingBids"
-                     ng-click="acceptBid(bidItem.id, proxie.id, bidItem.bidder.id, proxie.account)"
+                     ng-click="acceptBid(bidItem.id, proxie.id, bidItem.bidder.id, proxie.account, bidsmapping[bidItem.bid])"
                      class="md-raised md-primary">Accept: {{bidsmapping[bidItem.bid]}}</md-button>
         
       </md-list-item>
@@ -90,11 +107,5 @@
 
 
   </section>
-
-
-  <form id="checkout" method="post" action="http://localhost:800/api/v1/braintree/">
-    <div id="payment-form"></div>
-    <input type="submit" value="Pay $10">
-  </form>
 
 </section>

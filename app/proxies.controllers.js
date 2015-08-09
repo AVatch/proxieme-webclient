@@ -145,7 +145,8 @@ angular.module('proxies.controllers', [])
       }, function(e){console.log(e);});
 
   $scope.acceptingBids = true;
-  $scope.acceptBid = function(bidID, proxieID, surrogateID, requesterID){
+  $scope.payFormVisible = false;
+  $scope.acceptBid = function(bidID, proxieID, surrogateID, requesterID, bidValue){
     if($scope.acceptingBids){
       var session =   {
           "sessionID": "1",
@@ -155,7 +156,11 @@ angular.module('proxies.controllers', [])
           "proxie": proxieID,
           "surrogate": surrogateID,
           "requester": requesterID
-      }
+      };
+
+      $scope.payFormVisible = true;
+      
+      $scope.acceptedBid = bidValue;
 
       Proxie.acceptBid(session)
         .then(function(s){
@@ -169,7 +174,6 @@ angular.module('proxies.controllers', [])
         }, function(e){console.log(e);});
     }
   };
-
 
   $scope.session = {};
   var session;
