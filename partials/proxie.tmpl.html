@@ -9,6 +9,17 @@
     </md-card-content>
   </md-card>
 
+
+  <section ng-if="proxie.owner && !acceptingBids"
+           layout="row"
+           layout-align="center center">
+  
+    <md-button 
+               class="md-raised md-primary">Start Session</md-button>
+  </section>
+
+
+
   <section ng-if="!proxie.owner && acceptingBids"
            layout="row"
            layout-align="center center">

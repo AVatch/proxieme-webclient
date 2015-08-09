@@ -148,7 +148,6 @@ angular.module('proxies.controllers', [])
 
       .then(function(sessions){
         $scope.session = sessions.results[0];
-        console.log($scope.session);
         if(sessions.count>0){ $scope.acceptingBids = false; }
       }, function(e){console.log(e);});
   }; syncSessions();
