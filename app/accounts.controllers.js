@@ -8,6 +8,15 @@ angular.module('accounts.controllers', [])
 .controller('AccountController', ['$scope', '$state', 'Account',
  function($scope, $state, Account){
   
+  $scope.bidsmapping = {
+    "00": "FREE",
+    "01": "$0.99",
+    "02": "$4.99",
+    "03": "$9.99",
+    "04": "$49.99",
+    "05": "$99.99"
+  };
+  
   var pk = $state.params.pk;
 
   $scope.account = {};

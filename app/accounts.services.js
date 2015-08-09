@@ -56,10 +56,25 @@ angular.module('accounts.services', [])
       return response;
     };
 
+
+    var getBraintreeToken = function(){
+      var token = Authentication.getToken();
+      var response = $http({
+                        url: DOMAIN + '/api/v1/braintree/',
+                        method: 'GET',
+                        headers: { 
+                          'Content-Type': 'application/json',
+                          'Authorization': 'Token ' + token },
+                      });
+      return response;
+    };
+
     return{
       me: me,
       getAccount: getAccount,
       getAccountProxies: getAccountProxies,
-      getAccountBids: getAccountBids
+      getAccountBids: getAccountBids,
+
+      getBraintreeToken: getBraintreeToken
     };
 }]);

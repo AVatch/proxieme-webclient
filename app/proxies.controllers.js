@@ -9,6 +9,7 @@ angular.module('proxies.controllers', [])
   '$timeout', 'Account', 'Proxie',
   function($scope, $rootScope, $timeout, Account, Proxie){
 
+
     $scope.proxies = [];
     $scope.proxiesLoaded = false;
     var syncProxies = function(){
@@ -126,6 +127,22 @@ angular.module('proxies.controllers', [])
         }, function(e){console.log(e);});
     }
   };
+
+
+  Account.getBraintreeToken()
+      .then(function(s){
+        if(s.status==200){ return s.data; }
+        else{ throw "error getting token"; }
+      }, function(e){console.log(e);})
+
+      .then(function(token){
+        $rootScope.braintree = token.token;
+        braintree.setup(
+          $rootScope.braintree,
+          "dropin", {
+            container: "payment-form"
+          });
+      }, function(e){console.log(e);});
 
   $scope.acceptingBids = true;
   $scope.acceptBid = function(bidID, proxieID, surrogateID, requesterID){
