@@ -55,9 +55,9 @@
 
     <md-card>
       
-      <form id="checkout" method="post" action="http://localhost:8000/api/v1/braintree/">
+      <form id="checkout" method="post" action="http://proxieme-dev.elasticbeanstalk.com/api/v1/braintree/">
         <div id="payment-form"></div>
-        <input value="http://16df07c0.ngrok.com/#/proxie/4" name="origin" style="display:none;">
+        <input value="http://16df07c0.ngrok.com/#{{url}}" name="origin" style="display:none;">
         <input value="{{acceptedBid}}" name="amount" style="display:none;">
         <md-button type="submit">Submit</md-button>
 
@@ -65,7 +65,6 @@
 
     </md-card>
   </section>
-
 
   <section style="margin-left: 10%; margin-right: 10%;">
 

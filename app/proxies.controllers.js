@@ -43,8 +43,8 @@ angular.module('proxies.controllers', [])
 }])
 
 .controller('ProxieController', ['$scope', '$rootScope', '$state', 
- '$timeout', 'Account', 'Proxie',
- function($scope, $rootScope, $state, $timeout, Account, Proxie){
+ '$timeout', 'Account', 'Proxie', '$location',
+ function($scope, $rootScope, $state, $timeout, Account, Proxie, $location){
 
   var pk = $state.params.pk;
 
@@ -174,6 +174,8 @@ angular.module('proxies.controllers', [])
         }, function(e){console.log(e);});
     }
   };
+
+  $scope.url = $location.path();
 
   $scope.session = {};
   var session;
