@@ -60,8 +60,24 @@ angular.module('proxies.controllers', [])
         if($scope.proxie.account == $rootScope.me.id){
           $scope.proxie.owner = true;
         }
+        syncAccount();
       }, function(e){console.log(e);});
   }; syncProxie();
+
+
+  $scope.account = {};
+  var syncAccount = function(){
+    Account.getAccount($scope.proxie.account)
+      .then(function(s){
+        if(s.status==200){ return s.data; }
+        else{ throw "error fetching account"; }
+      }, function(e){console.log(e);})
+
+      .then(function(account){
+        $scope.account = account;
+      }, function(e){console.log(e);});
+  };
+
 
   $scope.bids = [];
   $scope.bidsLoaded = false;
