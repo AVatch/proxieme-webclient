@@ -139,6 +139,10 @@ angular.module('proxies.controllers', [])
 
 
   $scope.session = {};
+  var session;
+  var sessionId;
+  var token;
+  var apiKey = '45306032';
   var syncSessions = function(){
     Proxie.getProxieSessions(pk)
       .then(function(s){
@@ -148,9 +152,89 @@ angular.module('proxies.controllers', [])
 
       .then(function(sessions){
         $scope.session = sessions.results[0];
-        if(sessions.count>0){ $scope.acceptingBids = false; }
+        if(sessions.count>0){ 
+          $scope.acceptingBids = false;
+          sessionId = $scope.session.sessionID;
+          token = $scope.session.requesterID;
+          initSession();
+        }
       }, function(e){console.log(e);});
   }; syncSessions();
+
+  var initSession = function(){
+    session = OT.initSession(apiKey, sessionId);
+    // Add event listeners to the session
+    session.on({
+      sessionDisconnected: function(event) {
+        // The user was disconnected from the Session. Any subscribers
+        // and publishers will automatically be removed from the dom.
+      },
+      streamCreated: function(event) {
+        // Subscribe to a new third-party stream in the session.
+        console.log('streamCreated');
+        var subOptions = {insertMode: 'append'};
+        session.subscribe(event.stream, 'subscribersContainer', subOptions);
+      },
+      signal: function(event) {
+        // A signal was received.
+        var signalsDiv = document.getElementById('signals');
+        var messageP = document.createElement('p');
+        messageP.innerHTML = event.data;
+        signalsDiv.appendChild(messageP);
+      }
+    });
+  };
+
+
+  $scope.streaming = false;
+  $scope.startSession = function(){
+    $scope.connect();
+    $scope.streaming = true;
+  };
+  $scope.stopSession = function(){
+    $scope.stopPublishing();
+    $scope.disconnect();
+    $scope.streaming = false;
+  };
+
+  $scope.connect = function() {
+    session.connect(token, function(error) {
+      if (error) {
+        alert(error.message);
+      } else {
+        $scope.startPublishing();
+      }
+    });
+  };
+  $scope.disconnect = function() {
+    session.disconnect();
+  };
+
+  // Called when user wants to start publishing to the session
+  $scope.startPublishing = function() {
+    var publisherOptions = {
+      name: 'A web-based OpenTok client',
+      insertMode: 'append'
+    };
+    publisher = OT.initPublisher('publisherContainer', publisherOptions);
+    session.publish(publisher, function(error) {
+      if (error) {
+        alert(error.message);
+      }
+    });
+  };
+  $scope.stopPublishing = function(){
+    session.unpublish(publisher);
+  };
+  //--------------------------------------
+  //  HELPER METHODS
+  //--------------------------------------
+  var show = function(id) {
+    document.getElementById(id).style.display = 'block';
+  };
+  var hide = function(id) {
+    document.getElementById(id).style.display = 'none';
+  };
 
 
 }])

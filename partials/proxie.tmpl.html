@@ -14,8 +14,24 @@
            layout="row"
            layout-align="center center">
   
-    <md-button 
+    <md-button ng-if="!streaming"
+               ng-click="startSession()"
                class="md-raised md-primary">Start Session</md-button>
+    <md-button ng-if="streaming"
+               ng-click="stopSession()"
+               class="md-raised md-primary">Stop Session</md-button>
+  </section>
+
+  <section ng-show="streaming">
+    <md-card style="margin-left: 20%; margin-right: 20%;">
+      <md-card-content layout="row">
+
+        <div id="publisherContainer" flex></div>
+        <div id="subscribersContainer" flex></div>
+
+      </md-card-content>
+    </md-card>
+
   </section>
 
 
